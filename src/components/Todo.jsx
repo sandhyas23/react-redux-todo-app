@@ -3,17 +3,23 @@ import {BsPlus} from "react-icons/bs"
 import { useDispatch } from 'react-redux';
 import { addTodo, updateSearchTerm } from '../redux/actions';
 import FilterButton from './FilterButton';
+import TodoList from './TodoList';
 
 function Todo() {
     const dispatch = useDispatch()
     const [newTodoText, setNewTodoText] = useState("");
     const [searchTerm, setSearchTerm] = useState("");
 
-    const handleAddTodo = () =>{
+    const handleAddToDo = (text) =>{
+        dispatch(addTodo(text))
+    }
+
+    const handleAddToDoClick = () =>{
         if(newTodoText.trim() !== ""){
-            dispatch(addTodo(newTodoText.trim()));
+            handleAddToDo(newTodoText.trim());
+            setNewTodoText("");
         }
-        setNewTodoText("");
+        
        
     }
 
@@ -35,13 +41,13 @@ function Todo() {
             <input value={newTodoText} onChange={(e) => setNewTodoText(e.target.value)} type="text" name="addTodoInput" id="addTodoInput" placeholder='Add Todo'
             className=' p-2 border-b-2 border-gray-300   rounded w-full focus:outline-none focus:border-green-500 ' />
             <button className=' bg-blue-500 ml-4 p-2 rounded text-white hover:bg-blue-600'
-                 onClick={handleAddTodo}>
+                 onClick={handleAddToDoClick}>
               <BsPlus/>
             </button>
         </div>
         
         {/* filter and search */}
-        <div className='flex m-2'>
+        <div className='flex m-2 '>
             <FilterButton/>
             <div className='flex flex-1 w-full justify-end items-end '>
                 <input type="text" placeholder="Search" className='p-2 rounded focus:outline-none border focus:border-blue-300 '
@@ -49,6 +55,8 @@ function Todo() {
                   <button type='submit' hidden />
             </div>
         </div>
+
+        <TodoList/>
     </div>
   )
 }
