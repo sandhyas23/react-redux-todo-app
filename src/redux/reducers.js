@@ -27,7 +27,7 @@ const todoReducer = (state = initialState, action) => {
 
         case REMOVE_TODO:
             return {
-                todos: state.todos.map((todo, index) =>
+                todos: state.todos.filter((todo, index) =>
                     index !== action.payload.id
                 ),
                 filter: state.filter,
